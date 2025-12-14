@@ -6,3 +6,4 @@ google-auth
 google-auth-oauthlib
 supabase
 flask-cors
+google-generativeai
