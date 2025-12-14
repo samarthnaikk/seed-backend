@@ -2,8 +2,9 @@
 
 This document describes the available API endpoints in the SEED backend system.
 
-## Base URL
-All routes are prefixed with `/auth`
+## Base URLs
+- Authentication routes are prefixed with `/auth`
+- Chatbot routes are prefixed with `/chatbot`
 
 ## Authentication Routes
 
@@ -229,6 +230,68 @@ All routes are prefixed with `/auth`
 
 ---
 
+## Chatbot Routes
+
+### 1. Chatbot Health Check
+**Endpoint:** `GET /chatbot/`
+
+**Description:** Returns the chatbot service health status.
+
+**Input:** None
+
+**Response:**
+```json
+{
+    "status": "healthy"
+}
+```
+
+**Status Code:** `200 OK`
+
+---
+
+### 2. Chat with AI
+**Endpoint:** `POST /chatbot/chat`
+
+**Description:** Sends a message to Gemini 2.5 Flash AI model and returns the response.
+
+**Headers:**
+- `Content-Type: application/json`
+
+**Input:**
+```json
+{
+    "message": "Hello, how are you?"
+}
+```
+
+**Success Response:**
+```json
+{
+    "response": "Hello! I'm doing well, thank you for asking. How can I help you today?"
+}
+```
+**Status Code:** `200 OK`
+
+**Error Responses:**
+- **Missing Message:**
+  ```json
+  {
+      "error": "Missing 'message' in request body"
+  }
+  ```
+  **Status Code:** `400 Bad Request`
+
+- **API Error:**
+  ```json
+  {
+      "error": "Error details..."
+  }
+  ```
+  **Status Code:** `500 Internal Server Error`
+
+---
+
 ## Notes
 
 1. **OTP Expiry:** OTPs are valid for 15 minutes (900 seconds)
@@ -237,3 +300,4 @@ All routes are prefixed with `/auth`
 4. **Email Service:** Uses Gmail API for sending OTP emails
 5. **Database:** Uses Supabase for user data storage
 6. **Cache:** Uses Redis for OTP storage and caching
+7. **AI Model:** Uses Google's Gemini 2.5 Flash for chat responses
