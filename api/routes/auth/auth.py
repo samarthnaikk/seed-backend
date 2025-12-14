@@ -230,7 +230,7 @@ def verify_otp():
     r.delete(key)
 
     try:
-        supabase.table("nw_users").insert({
+        supabase.table("se_users").insert({
             "email": email,
             "password": password
         }).execute()
@@ -261,7 +261,7 @@ def signin():
         return jsonify({"error": "Email and password are required"}), 400
 
     try:
-        result = supabase.table("nw_users").select("password").eq("email", email).execute()
+        result = supabase.table("se_users").select("password").eq("email", email).execute()
 
         if len(result.data) == 0:
             return jsonify({"success": False}), 200
